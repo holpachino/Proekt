@@ -23,6 +23,13 @@
     <Property Name="IdPosition" Type="int" Nullable="false" />
     <Property Name="IdUser" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="IdGender" />
+    </Key>
+    <Property Name="IdGender" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="IdOrder" />
@@ -100,10 +107,11 @@
     <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
-    <Property Name="Patronymic" Type="nvarchar" MaxLength="50" />
+    <Property Name="Birthday" Type="date" Nullable="false" />
     <Property Name="IdRole" Type="int" Nullable="false" />
     <Property Name="Phone" Type="nchar" MaxLength="12" Nullable="false" />
     <Property Name="Mail" Type="nvarchar" MaxLength="50" />
+    <Property Name="IdGender" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_Client_User">
     <End Role="User" Type="Self.User" Multiplicity="1" />
@@ -225,6 +233,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User_Gender">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="IdGender" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IdGender" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_User_Role">
     <End Role="Role" Type="Self.Role" Multiplicity="1" />
     <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -272,6 +292,7 @@
     <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -320,6 +341,10 @@
     <AssociationSet Name="FK_ProductOrder_Product" Association="Self.FK_ProductOrder_Product">
       <End Role="Product" EntitySet="Product" />
       <End Role="ProductOrder" EntitySet="ProductOrder" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
+      <End Role="Gender" EntitySet="Gender" />
+      <End Role="User" EntitySet="User" />
     </AssociationSet>
     <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
       <End Role="Role" EntitySet="Role" />

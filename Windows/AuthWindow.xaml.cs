@@ -33,7 +33,7 @@ namespace AndrKarmStore.Windows
 
         private void DoneButton_Click(object sender, RoutedEventArgs e)
         {
-            var userAuth = Context.User.ToList().Where(i => i.Phone == PhoneBox.Text && i.Password == PasswordBox.Text).FirstOrDefault();
+            var userAuth = Context.User.ToList().Where(i => i.Phone == PhoneBox.Text && i.Password == PasswordBox.Password).FirstOrDefault();
 
 
 
@@ -45,6 +45,14 @@ namespace AndrKarmStore.Windows
             {
                 MessageBox.Show("Пользователь не найден", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow MainWindow = new MainWindow();
+            Close();
+            MainWindow.ShowDialog();
+
         }
     }
 }

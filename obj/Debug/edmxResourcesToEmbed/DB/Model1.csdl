@@ -29,6 +29,14 @@
     <NavigationProperty Name="User" Relationship="Self.FK_Employee_User" FromRole="Employee" ToRole="User" />
     <NavigationProperty Name="Order" Relationship="Self.FK_Order_Employee" FromRole="Employee" ToRole="Order" />
   </EntityType>
+  <EntityType Name="Gender">
+    <Key>
+      <PropertyRef Name="IdGender" />
+    </Key>
+    <Property Name="IdGender" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_User_Gender" FromRole="Gender" ToRole="User" />
+  </EntityType>
   <EntityType Name="Order">
     <Key>
       <PropertyRef Name="IdOrder" />
@@ -119,12 +127,14 @@
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Birthday" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="IdRole" Type="Int32" Nullable="false" />
     <Property Name="Phone" Type="String" MaxLength="12" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="IdGender" Type="Int32" Nullable="false" />
     <NavigationProperty Name="Client" Relationship="Self.FK_Client_User" FromRole="User" ToRole="Client" />
     <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_User" FromRole="User" ToRole="Employee" />
+    <NavigationProperty Name="Gender" Relationship="Self.FK_User_Gender" FromRole="User" ToRole="Gender" />
     <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
   </EntityType>
   <Association Name="FK_Client_User">
@@ -199,6 +209,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_User_Gender">
+    <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gender">
+        <PropertyRef Name="IdGender" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="IdGender" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ProductOrder_Order">
     <End Role="Order" Type="Self.Order" Multiplicity="1" />
     <End Role="ProductOrder" Type="Self.ProductOrder" Multiplicity="*" />
@@ -259,10 +281,11 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ClothingStoreEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="Entities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Client" EntityType="Self.Client" />
     <EntitySet Name="Color" EntityType="Self.Color" />
     <EntitySet Name="Employee" EntityType="Self.Employee" />
+    <EntitySet Name="Gender" EntityType="Self.Gender" />
     <EntitySet Name="Order" EntityType="Self.Order" />
     <EntitySet Name="Position" EntityType="Self.Position" />
     <EntitySet Name="Product" EntityType="Self.Product" />
@@ -295,6 +318,10 @@
     <AssociationSet Name="FK_Order_Employee" Association="Self.FK_Order_Employee">
       <End Role="Employee" EntitySet="Employee" />
       <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Gender" Association="Self.FK_User_Gender">
+      <End Role="Gender" EntitySet="Gender" />
+      <End Role="User" EntitySet="User" />
     </AssociationSet>
     <AssociationSet Name="FK_ProductOrder_Order" Association="Self.FK_ProductOrder_Order">
       <End Role="Order" EntitySet="Order" />

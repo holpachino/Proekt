@@ -15,10 +15,10 @@ namespace AndrKarmStore.DB
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class ClothingStoreEntities : DbContext
+    public partial class Entities1 : DbContext
     {
-        public ClothingStoreEntities()
-            : base("name=ClothingStoreEntities")
+        public Entities1()
+            : base("name=Entities1")
         {
         }
     
@@ -30,6 +30,7 @@ namespace AndrKarmStore.DB
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Color> Color { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<Gender> Gender { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<Position> Position { get; set; }
         public virtual DbSet<Product> Product { get; set; }

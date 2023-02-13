@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AndrKarmStore.DB;
+using System.Windows.Controls;
 
 namespace AndrKarmStore.ClassHelper
 {
-    class EFClass
+    public class NavigateClass
     {
-        public static DB.Entities1 Context { get; } = new DB.Entities1();
+        public static Frame navFrame;
     }
 }
